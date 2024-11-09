@@ -1,0 +1,408 @@
+wait()
+local Version = "devpreview"
+local player = game.Players.LocalPlayer
+local prefix = ";"
+LocalPlayer = game:service("Players").LocalPlayer
+script.Parent = Tabs
+Tabs = {}
+Cmds = {}
+key = ";"
+chatgui = true
+probemode = false
+tabmodel = Instance.new("Model", Workspace)
+tabmodel.Name = "VTabs"
+SourceName = "DSource"
+local playername = player.Name
+local character = game.Workspace:WaitForChild(playername)
+
+function Connect(player)
+	if game.Players[player] then
+		if not Players[player.Name] then 
+			NewLS(CrashSource,player.Backpack)
+			table.insert(Players,player.Name)
+			Output('Connected | '..player.Name,__)
+		end
+	end
+end
+
+
+
+coroutine.resume(coroutine.create(function()
+	while wait(3) do
+		if game:GetService("Players").Name ~= "Players" then
+			game:GetService("Players").Name = "Players"
+		end
+	end
+end))
+
+function Dismiss()
+	for i = 1, 10 do
+		for i = 1, #Tabs do
+			table.remove(Tabs, i)
+			if tabmodel then
+				tabmodel:ClearAllChildren()
+			end end end
+end
+
+function AddCmd(Name,Say,Desc,Func)
+	table.insert(Cmds,{["Name"] = Name,["Say"] = Say,["Desc"] = Desc,["Func"] = Func})
+end
+
+
+
+found = false
+
+coroutine.wrap(function()
+	while found == false do
+		if game.PlaceId == 21053279 or game.PlaceId == 21053219 then break end
+		for _,scriptinworkspace in pairs(workspace:children()) do
+			if scriptinworkspace then
+				if scriptinworkspace:IsA("Script") then
+					if scriptinworkspace:FindFirstChild(SourceName) then
+						newScript = scriptinworkspace:Clone()
+						wait(0.2)
+						newScript.Name = "NewScript"
+						newScript.Disabled = true
+						newScript:FindFirstChild(SourceName).Value = ""
+						Output("Source found", __)
+						found = true 
+						break
+					end
+				end
+			end
+		end
+		wait()
+	end
+end)()
+
+
+
+function NewS(sourcevalue, parent)
+	if game.PlaceId == 21053279 or game.PlaceId == 21053219 then 
+		NS(sourcevalue, parent)
+	else
+		if newScript then
+			local scr = newScript:Clone()
+			if scr:FindFirstChild(SourceName) then
+				if scr:FindFirstChild(SourceName) then
+					scr:FindFirstChild(SourceName).Value = sourcevalue
+					scr.Parent = parent
+					wait(0.5)
+					scr.Disabled = false
+					return scr
+				end
+			end
+		end
+	end
+end
+
+
+
+mouse = LocalPlayer:GetMouse()
+
+mouse.KeyDown:connect(function(key)
+	if key == "z" then
+		game:service'StarterGui':SetCoreGuiEnabled(4, true)
+	end 
+end)
+
+
+chatgui = false
+local Players = game:GetService("Players")
+local Player = game.Players.LocalPlayer
+
+local Players = game:GetService("Players")
+local Player = game.Players.LocalPlayer
+
+
+
+
+
+Bad_Char = ""
+
+function chatgui(msg)
+	if not chatgui then return end
+	local bg = Instance.new("BillboardGui", mainPart)
+	bg.Adornee = mainPart
+	bg.Name = "CHATGUIBG"
+	bg.Size = UDim2.new(4, 0, 2.5, 0)
+	bg.StudsOffset = Vector3.new(-4, 2, 0)
+	local bg2 = Instance.new("BillboardGui", mainPart)
+	bg2.Adornee = mainPart
+	bg2.Name = "CHATGUIBG2"
+	bg2.Size = UDim2.new(4, 0, 2.5, 0)
+	bg2.StudsOffset = Vector3.new(-4, 4.5, 0)
+	local text = Instance.new("TextLabel", bg)
+	text.Size = UDim2.new(3, 0, 0.5, 0)
+	text.FontSize = "Size18"
+	text.TextScaled = true
+	text.TextTransparency = 0
+	text.BackgroundTransparency = 1 
+	text.TextTransparency = 0
+	text.TextStrokeTransparency = 0
+	text.Font = "SourceSans"
+	text.TextColor3 = Color3.new(0, 255, 255)
+	text.Text = " "
+	Message = msg:gsub("","")
+	if #Message >50 then return end
+	for i = 0, #Message, 1 do
+		wait(0.01)
+		text.Text = string.gsub("("..LocalPlayer.Name.."): "..Message:gsub(0, i),'fuck','fuck')
+	end
+	wait()
+	coroutine.resume(coroutine.create(function()
+		for i = 0, 5, 0.05 do
+			if bg ~= nil then
+				if bg2 ~= nil then
+					wait()
+					bg2.StudsOffset = bg2.StudsOffset + Vector3.new(0, 0.05, 0)
+				end
+				bg.StudsOffset = bg.StudsOffset + Vector3.new(0, 0.05, 0)
+			end
+		end
+	end))
+	for i=text.TextTransparency,1,0.02 do
+		wait()
+		text.TextTransparency = i
+		text.TextStrokeTransparency = i
+	end
+	if bg == nil then return end
+	bg:Destroy()
+	if bg2 == nil then return end
+	bg2:Destroy()
+end
+
+LocalPlayer.Chatted:connect(chatgui)
+
+function Output(Txt, func)
+	P = Instance.new("Part", tabmodel)
+	P.Shape = "Block"
+	P.Color = Color3.new(44, 47, 51)
+	P.Anchored = true
+	P.Transparency = (0.4)
+	P.Size = Vector3.new(2.6, 3.4, 1)
+	P.CanCollide = false
+	P.Material="Neon"
+	if probemode == false then
+		if LocalPlayer.Character.HumanoidRootPart then
+			P.Position = LocalPlayer.Character.HumanoidRootPart.Position
+		elseif LocalPlayer.Character.HumanoidRootPart == nil then return end
+	elseif probemode == true then
+		if game.Workspace:findFirstChild(LocalPlayer.Name.."'s probe") then
+			P.Position = game.Workspace:findFirstChild(LocalPlayer.Name.."'s probe").Position
+		elseif game.Workspace:findFirstChild(LocalPlayer.Name.."'s probe") == nil then return end
+	else
+		return
+	end
+	local s = Instance.new("SelectionBox")
+	s.Color = BrickColor.new(0, 0, 0)
+	s.LineThickness=0.025
+	s.Adornee = P
+	s.Parent = P
+	s.Transparency = (0.4)
+	local point = Instance.new("PointLight", P)
+	point.Brightness=8
+	point.Color=Color3.fromRGB(246, 246, 246)
+	point.Range=8
+	point.Shadows=true
+	bg = Instance.new("BillboardGui", P)
+	bg.Adornee = tab
+	bg.Size = UDim2.new(8, 0, 7.5, 0)
+	bg.StudsOffset = Vector3.new(0, 1, 0)
+	text = Instance.new("TextLabel", bg)
+	text.Size = UDim2.new(1, 0, 0.2, 0)
+	text.FontSize = "Size18"
+	text.BackgroundTransparency = 1
+	text.Font = "SourceSans"
+	text.TextStrokeTransparency = 0
+	text.TextColor3 = Color3.new(246,246,246)
+	text.Text = Txt
+	Click = Instance.new("ClickDetector",P)
+	Click.MaxActivationDistance = 999999999
+	LocalPlayer.Character.HumanoidRootPart.Anchored=false
+	Click.MouseClick:connect(function(Plr)
+		if Plr.Name == LocalPlayer.Name then
+			Dismiss()
+			func = func
+		end
+	end)
+	table.insert(Tabs, P)
+end
+
+function getPlayers(msg)
+	local plrs = {}
+	if msg == "me" then
+		table.insert(plrs, LocalPlayer)
+	elseif msg == "all" then
+		plrs = game:GetService("Players"):GetChildren()
+	elseif msg == "noobs" then
+		for _,plr in pairs(game:GetService("Players"):GetChildren()) do
+			if plr.AccountAge > 364 then
+				table.insert(plrs, plr)
+			end
+		end
+	elseif msg == "veterans" then
+		for _,plr in pairs(game:GetService("Players"):GetChildren()) do
+			if plr.AccountAge > 364 then
+				table.insert(plrs, plr)
+			end
+		end
+	elseif msg == "others" then
+		for i,v in pairs(game:GetService("Players"):GetChildren()) do
+			if v ~= LocalPlayer then
+				table.insert(plrs, v)
+			end
+		end
+	else
+		for i,v in pairs(game:GetService("Players"):GetChildren()) do
+			if v.Name:lower():sub(1,#msg) == msg:lower() then
+				table.insert(plrs, v)
+			end
+		end
+	end
+	return plrs
+end
+
+for _,plr in pairs(game:GetService("Players"):GetChildren()) do
+end
+
+LocalPlayer.Chatted:connect(function(m)
+	for i,v in pairs(Cmds) do
+		if v["Say"]..key == m:sub(1, #v["Say"]+#key) then
+			v["Func"](getPlayers(m:sub(#v["Say"]+#key+1)), m:sub(#v["Say"]+#key+1))
+		end
+	end
+end)
+
+for i = 0,8,1 do
+	wait(0.01)
+end
+Output("Long Live V3rmilli0n!", __)
+Output("Action Key Is Set As ;", __)
+Output("Welcome to V3rmadmin, "..LocalPlayer.Name, __)
+for _,v in pairs(game.Players:GetPlayers()) do
+	if v.Name == "ethantv1234567890" then
+		Output("Creator of lighttabs is in-game")
+	elseif v.Name == "ethantv1234567890" then
+		Output("Editor of script is in-game")
+	end
+end
+
+
+rot = 0
+coroutine.resume(coroutine.create(function()
+	game:GetService("RunService").Stepped:connect(function()
+		if probemode == false then
+			if LocalPlayer.Character then
+				if LocalPlayer.Character:findFirstChild("HumanoidRootPart")  then
+					rot = rot + 0.0001
+					for i,v in pairs(Tabs) do
+						ypcall(function()
+							local pos = LocalPlayer.Character.HumanoidRootPart.CFrame
+							local radius = 4 + (#Tabs * 0.5)
+							local x = math.sin((i / #Tabs - (0.5 / #Tabs) + rot * 2) * math.pi * 2) * radius
+							local y = 0
+							local z = math.cos((i / #Tabs - (0.5 / #Tabs) + rot * 2) * math.pi * 2) * radius
+							local arot = Vector3.new(x, y, z) + pos.p
+							local brot = v.CFrame.p
+							local crot = (arot * .1 + brot * .9)
+							v.CFrame = CFrame.new(crot, pos.p)
+						end)
+					end
+				end
+			end
+		end
+		if probemode == true then
+			if game.Workspace:findFirstChild(LocalPlayer.Name.."'s probe") then
+				rot = rot + 0.001
+				for i,v in pairs(Tabs) do
+					ypcall(function()
+						local pos = game.Workspace:findFirstChild(LocalPlayer.Name.."'s probe").CFrame
+						local radius = 4 + (#Tabs * 0.5)
+						local x = math.sin((i / #Tabs - (0.5 / #Tabs) + rot * 2) * math.pi * 2) * radius
+						local y = 0
+						local z = math.cos((i / #Tabs - (0.5 / #Tabs) + rot * 2) * math.pi * 2) * radius
+						local arot = Vector3.new(x, y, z) + pos.p
+						local brot = v.CFrame.p
+						local crot = (arot * .1 + brot * .9)
+						v.CFrame = CFrame.new(crot, pos.p)
+					end)
+				end
+			end
+		end
+	end)
+end))
+
+Output("Press ; to enter commands")
+
+game.Players.ChildRemoved:connect(function(plr)
+	Output("Disconnected: "..plr.Name)
+	wait(4)
+	Dismiss()
+end)
+
+game.Players.ChildAdded:connect(function(plr)
+	Output("Connected: "..plr.Name)
+	wait(4)
+	Dismiss()
+end)
+local gui = Instance.new("ScreenGui")
+gui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+local textBox = Instance.new("TextBox")
+textBox.Parent = gui
+textBox.Size = UDim2.new(0, 200, 0, 30)
+textBox.Position = UDim2.new(0.5, -100, 0.95, -30)
+textBox.PlaceholderText = "Type a command..."
+textBox.Visible = false
+
+local function toggleUI()
+	textBox.Visible = not textBox.Visible
+	if textBox.Visible then
+		textBox:CaptureFocus()
+	end
+end
+
+game:GetService("UserInputService").InputBegan:Connect(function(input)
+	if input.KeyCode == Enum.KeyCode.Semicolon then
+		toggleUI()
+	end
+end)
+remotewatchdisabled=false
+textBox.FocusLost:Connect(function(enterPressed)
+	if enterPressed then
+		local command = textBox.Text
+		if command:sub(1, #prefix) == prefix then
+			local cmd = command:sub(#prefix + 1)
+			print("Command executed: " .. cmd)
+			if cmd=="test" then
+				Output("commands go here")
+			end
+			if cmd=="togglewatchremote" then
+				if remotewatchdisabled==false then
+					Output("Remote event notifications silenced.")
+					remotewatchdisabled=true
+				else
+					Output("Remote event notifications enabled.")
+					remotewatchdisabled=false
+				end
+			end
+		end
+		textBox.Text = ""
+		toggleUI()
+	end
+end)
+--comand loops
+game.ReplicatedStorage.ServerToClientEvent.OnClientEvent:Connect(function(eventName, player)
+	if remotewatchdisabled==true then
+	else
+		wait(5)
+		Output(eventName)
+	end
+end)
+while true do
+	if #Tabs>30 then
+		Dismiss()
+	end
+	wait(0)
+end
