@@ -1,0 +1,21 @@
+local lastFiredEventName = ""
+local lastFiredPlayer = nil
+local lastFiredArguments = {}
+
+local function handleRemoteEvent(eventName, player, ...)
+	lastFiredEventName = eventName
+	lastFiredPlayer = player
+	lastFiredArguments = {...}
+
+	print("RemoteEvent '" .. eventName .. "' fired by " .. player.Name)
+	print("Arguments:", ...)
+	game.ReplicatedStorage.ServerToClientEvent:FireAllClients(eventName.."' fired by "..player.Name)
+end
+
+for _, remoteEvent in pairs(game:GetDescendants()) do
+	if remoteEvent:IsA("RemoteEvent") then
+		remoteEvent.OnServerEvent:Connect(function(player, ...)
+			handleRemoteEvent(remoteEvent.Name, player, ...)
+		end)
+	end
+end
